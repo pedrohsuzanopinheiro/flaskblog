@@ -4,6 +4,8 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationE
 
 from flaskblog.models import User
 
+already_taken_text = "already taken! Please choose another value."
+
 
 class RegistrationForm(FlaskForm):
     username = StringField(
@@ -19,12 +21,12 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError("Username already taken!")
+            raise ValidationError(f"Username {already_taken_text}")
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user:
-            raise ValidationError("Email already taken!")
+            raise ValidationError(f"Email {already_taken_text}")
 
 
 class LoginForm(FlaskForm):
