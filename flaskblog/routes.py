@@ -6,28 +6,14 @@ from flask_login import current_user, login_required, login_user, logout_user
 from PIL import Image
 
 from flaskblog import app, bcrypt, db
-from flaskblog.forms import LoginForm, RegistrationForm, UpdateAccountForm
+from flaskblog.forms import LoginForm, PostForm, RegistrationForm, UpdateAccountForm
 from flaskblog.models import Post, User
-
-posts = [
-    {
-        "author": "Pedro Pinheiro",
-        "title": "Blog post 1",
-        "content": "That's my first post!",
-        "date_posted": "April 10, 2022",
-    },
-    {
-        "author": "Droka",
-        "title": "Blog post 2",
-        "content": "That's my second post!",
-        "date_posted": "April 11, 2022",
-    },
-]
 
 
 @app.route("/")
 @app.route("/home")
 def home():
+    posts = Post.query.all()
     return render_template("home.html", posts=posts)
 
 
@@ -111,3 +97,18 @@ def account():
     return render_template(
         "account.html", title="Account", image_file=image_file, form=form
     )
+
+
+@app.route("/post/new", methods=["GET", "POST"])
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(
+            title=form.title.data, content=form.content.data, author=current_user
+        )
+        db.session.add(post)
+        db.session.commit()
+        flash("Post created!", "success")
+        return redirect(url_for("home"))
+    return render_template("create_post.html", title="New Post", form=form)
