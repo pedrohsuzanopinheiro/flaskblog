@@ -20,6 +20,7 @@ pathspec==0.9.0
 Pillow==9.1.0
 platformdirs==2.5.1
 pycparser==2.21
+pytz==2022.1
 six==1.16.0
 SQLAlchemy==1.4.34
 tomli==2.0.1
