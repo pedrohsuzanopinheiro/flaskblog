@@ -1,11 +1,16 @@
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 class Config:
-    SECRET_KEY = (
-        "009ed827052896fc6ae7426c140ea46d"  # TODO: Use .env to hide those files.
-    )
-    SQLALCHEMY_DATABASE_URI = "sqlite:///site.db"
-    SQLALCHEMY_TRACK_MODIFICATIONS = False  # Supressing notifications
-    MAIL_SERVER = "smtp.googlemail.com"
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = ""
-    MAIL_PASSWORD = ""
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+    SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS")
+    MAIL_SERVER = os.getenv("MAIL_SERVER")
+    MAIL_PORT = os.getenv("MAIL_PORT")
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS")
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
