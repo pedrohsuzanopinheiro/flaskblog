@@ -1,4 +1,12 @@
-from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    abort,
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_login import current_user, login_required
 from flaskblog import db
 from flaskblog.models import Post
@@ -13,7 +21,9 @@ def new_post():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(
-            title=form.title.data, content=form.content.data, author=current_user
+            title=form.title.data,
+            content=form.content.data,
+            author=current_user,
         )
         db.session.add(post)
         db.session.commit()
@@ -47,7 +57,10 @@ def update_post(post_id):
         form.title.data = post.title
         form.content.data = post.content
     return render_template(
-        "create_post.html", title="Update Post", form=form, legend="Update Post"
+        "create_post.html",
+        title="Update Post",
+        form=form,
+        legend="Update Post",
     )
 
 
